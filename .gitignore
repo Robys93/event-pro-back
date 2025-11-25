@@ -1,0 +1,5 @@
+# Evito di tracciare i file generati dalla compilazione
+/target/
+
+# File temporanei specifici di macOS
+.DS_Store
