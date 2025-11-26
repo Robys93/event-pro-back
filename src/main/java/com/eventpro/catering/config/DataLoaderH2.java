@@ -76,7 +76,7 @@ public class DataLoaderH2 {
         return args -> {
 
             // Stampiamo un messaggio di inizio nel log
-            logger.info("=". repeat(70));
+            logger.info("=".repeat(70));
             logger.info("CARICAMENTO DATI DI TEST NEL DATABASE H2");
             logger.info("=".repeat(70));
 
