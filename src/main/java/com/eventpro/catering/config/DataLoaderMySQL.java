@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.Statement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 /**
  * CONFIGURAZIONE PER CARICAMENTO DATI MYSQL
@@ -75,9 +75,9 @@ public class DataLoaderMySQL {
                 try (Statement stmt = connection.createStatement()) {
                     ResultSet rs = stmt.executeQuery("SELECT * FROM utente");
                     while (rs.next()) {
-                        logger.info("✓ ID: {} | Username: {} | Password: {}",
+                        logger.info("✓ ID: {} | Email: {} | Password: {}",
                                 rs.getLong("id"),
-                                rs.getString("nome_utente"),
+                                rs.getString("email"),
                                 rs.getString("password"));
                     }
                 }
@@ -92,5 +92,4 @@ public class DataLoaderMySQL {
             }
         };
     }
-
 }

@@ -10,7 +10,7 @@ USE catering;
 
 CREATE TABLE utente (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nome_utente VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -20,9 +20,9 @@ CREATE TABLE utente (
 -- ============================================================================
 -- Inseriamo i 3 utenti di test che abbiamo usato in H2
 
-INSERT INTO utente (nome_utente, password) VALUES ('test', 'test');
-INSERT INTO utente (nome_utente, password) VALUES ('daniele', 'daniele');
-INSERT INTO utente (nome_utente, password) VALUES ('admin', 'admin');
+INSERT INTO utente (email, password) VALUES ('test@example.com', 'test');
+INSERT INTO utente (email, password) VALUES ('daniele@example.com', 'daniele');
+INSERT INTO utente (email, password) VALUES ('admin@example.com', 'admin');
 
 -- ============================================================================
 -- VERIFICA DATI INSERITI
