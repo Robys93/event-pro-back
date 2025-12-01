@@ -41,14 +41,14 @@ public class Utente {
     private Long id;
 
     /**
-     * NOME_UTENTE DELL'UTENTE
+     * EMAIL DELL'UTENTE
      *
      * @Column(unique = true, nullable = false):
-     *     - unique = true: non possono esserci due utenti con lo stesso nome_utente
-     *     - nullable = false: il nome_utente è obbligatorio (non può essere vuoto)
+     *     - unique = true: non possono esserci due utenti con la stessa email
+     *     - nullable = false: la email è obbligatoria (non può essere vuota)
      */
     @Column(unique = true, nullable = false)
-    private String nome_utente;
+    private String email;
 
     /**
      * PASSWORD DELL'UTENTE
@@ -84,14 +84,14 @@ public class Utente {
      * Serve per creare facilmente un nuovo Utente dal codice
      *
      * ESEMPIO DI USO:
-     * Utente u = new Utente("test", "test");
+     * Utente u = new Utente("test@example.com", "test");
      * utenteRepository.save(u);
      *
-     * @param nome_utente il nome utente
+     * @param email l'email dell'utente
      * @param password la password dell'utente
      */
-    public Utente(String nome_utente, String password) {
-        this.nome_utente = nome_utente;
+    public Utente(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
@@ -117,19 +117,19 @@ public class Utente {
     }
 
     /**
-     * Restituisce il nome_utente dell'utente
-     * @return il nome_utente
+     * Restituisce l'email dell'utente
+     * @return l'email
      */
-    public String getNome_utente() {
-        return nome_utente;
+    public String getEmail() {
+        return email;
     }
 
     /**
-     * Imposta lo nome_utente dell'utente
-     * @param nome_utente il nuovo nome_utente
+     * Imposta l'email dell'utente
+     * @param email la nuova email
      */
-    public void setNome_utente(String nome_utente) {
-        this.nome_utente = nome_utente;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     /**
@@ -157,13 +157,13 @@ public class Utente {
      * Serve per il debug (quando stampi l'oggetto nel log)
      *
      * ESEMPIO DI OUTPUT:
-     * Utente{id=1, nome_utente='test', password='test'}
+     * Utente{id=1, email='test@example.com', password='test'}
      */
     @Override
     public String toString() {
         return "Utente{" +
                 "id=" + id +
-                ", nome_utente='" + nome_utente + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
