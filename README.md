@@ -3,21 +3,8 @@ Task 1 -> Creazione progetto Spring Boot.<br>
 Quando avviato, in localhost:8080 appare risposta di string "Catering API attiva".<br>
 Task 2-> Collegare il progetto a un database.<br>
 Log di avvio contiene conferma di connessione al database "Catering".<br>
-Task 7-> Login e registrazione A.<br>
-```
-Crea entità user
-Obiettivo: avere qualcosa da salvare a DB.
-Cose da fare:
-Creare entity User con:
-Long id
-String email (unique, not null)
-String password
-String role (es. "USER")
-Annotare con @Entity e @Table("users")
-Creare UserRepository che estende JpaRepository<User, Long>
-metodo Optional<User> findByEmail(String email)
-metodo boolean existsByEmail(String email)
-```
+Task 7A-> Login e registrazione A.<br>
+Aggiornamento Utente, SQL con email invece di nome_utente, creazione metodi nel Repository.<br>
 
 Nella repository è presente il file di nome<br>
 ```schema_sql_test_login_local.sql```<br>
