@@ -30,6 +30,7 @@ import org.springframework.context.annotation.Profile;
  * - @Profile("h2"): questa classe viene caricata SOLO quando il profilo attivo è "h2"
  *   Se il profilo è "dev" (MySQL), questa classe viene ignorata
  */
+/**
 @Configuration
 @Profile("h2")
 public class DataLoaderH2 {
@@ -47,6 +48,7 @@ public class DataLoaderH2 {
      * - warn(): per avvertimenti (qualcosa potrebbe essere sbagliato)
      * - error(): per errori (qualcosa è andato male)
      */
+/**
     private static final Logger logger = LoggerFactory.getLogger(DataLoaderH2.class);
 
     /**
@@ -68,6 +70,7 @@ public class DataLoaderH2 {
      * @param utenteRepository il repository per salvare gli utenti nel database
      * @return un CommandLineRunner che esegue il codice all'avvio
      */
+/**
     @Bean
     public CommandLineRunner loadData(UtenteRepository utenteRepository) {
 
@@ -116,3 +119,4 @@ public class DataLoaderH2 {
     }
 
 }
+*/
