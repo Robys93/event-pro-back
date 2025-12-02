@@ -5,6 +5,31 @@ Task 2-> Collegare il progetto a un database.<br>
 Log di avvio contiene conferma di connessione al database "Catering".<br>
 Task 7A-> Login e registrazione A.<br>
 Aggiornamento Utente, SQL con email invece di nome_utente, creazione metodi nel Repository.<br>
+Task 7B-> Login e registrazione B.<br>
+```
+Aggiungere dipendenza spring-boot-starter-security.
+Creare CustomUserDetailsService che:
+-usa UserRepository.findByEmail(...)
+-costruisce un UserDetails con email + password.
+
+Creare SecurityConfig very basic:
+-espone PasswordEncoder (BCrypt)
+-espone AuthenticationManager
+-in SecurityFilterChain:
+--permettere /api/auth/**
+--tutto il resto autenticato
+--csrf disabilitata, SESSION_STATELESS
+
+Modificare registrazione per:
+-criptare la password con passwordEncoder.encode(...).
+
+Creare LoginRequest (DTO) con email, password.
+
+In AuthController aggiungere:
+-POST /api/auth/login
+-usa AuthenticationManager.authenticate(...)
+-se le credenziali sono giuste, risponde semplicemente 200 OK con un messaggio tipo “login ok”.
+```
 
 Nella repository è presente il file di nome<br>
 ```schema_sql_test_login_local.sql```<br>
