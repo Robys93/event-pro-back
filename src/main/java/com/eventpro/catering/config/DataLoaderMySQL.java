@@ -75,10 +75,11 @@ public class DataLoaderMySQL {
                 try (Statement stmt = connection.createStatement()) {
                     ResultSet rs = stmt.executeQuery("SELECT * FROM utente");
                     while (rs.next()) {
-                        logger.info("✓ ID: {} | Email: {} | Password: {}",
+                        logger.info("✓ ID: {} | Email: {} | Password: {} | Role: {}",
                                 rs.getLong("id"),
                                 rs.getString("email"),
-                                rs.getString("password"));
+                                rs.getString("password"),
+                                rs.getString("role")); // Include il ruolo
                     }
                 }
 
