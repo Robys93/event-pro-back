@@ -64,6 +64,22 @@ public class Utente {
     @Column(nullable = false)
     private String password;
 
+    /**
+     * RUOLO DELL'UTENTE
+     *
+     * @Column(nullable = false):
+     *     - nullable = false: il ruolo è obbligatorio (non può essere vuoto)
+     *     - rappresenta il ruolo assegnato all'utente, es. "USER", "ADMIN"
+     *
+     * IMPORTANTE:
+     * - Può essere utilizzato da Spring Security per il controllo degli accessi
+     * - Convenzione comune:
+     *     - "ROLE_USER" per utenti standard
+     *     - "ROLE_ADMIN" per amministratori
+     */
+    @Column(nullable = false)
+    private String role;
+
     // ========================================================================
     // COSTRUTTORI
     // ========================================================================
@@ -84,15 +100,17 @@ public class Utente {
      * Serve per creare facilmente un nuovo Utente dal codice
      *
      * ESEMPIO DI USO:
-     * Utente u = new Utente("test@example.com", "test");
+     * Utente u = new Utente("test@example.com", "test", "USER");
      * utenteRepository.save(u);
      *
      * @param email l'email dell'utente
      * @param password la password dell'utente
+     * @param role il ruolo dell'utente
      */
-    public Utente(String email, String password) {
+    public Utente(String email, String password, String role) {
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
     // ========================================================================
@@ -148,6 +166,23 @@ public class Utente {
         this.password = password;
     }
 
+    /**
+     * Restituisce il ruolo dell'utente
+     * @return il ruolo assegnato all'utente
+     */
+    public String getRole() {
+        return role;
+    }
+
+    /**
+     * Imposta il ruolo dell'utente
+     * @param role il nuovo ruolo da assegnare
+     */
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+
     // ========================================================================
     // METODO toString (FACOLTATIVO MA UTILE)
     // ========================================================================
@@ -157,7 +192,7 @@ public class Utente {
      * Serve per il debug (quando stampi l'oggetto nel log)
      *
      * ESEMPIO DI OUTPUT:
-     * Utente{id=1, email='test@example.com', password='test'}
+     * Utente{id=1, email='test@example.com', password='test', role='USER'}
      */
     @Override
     public String toString() {
@@ -165,6 +200,7 @@ public class Utente {
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 
