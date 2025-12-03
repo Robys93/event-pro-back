@@ -6,7 +6,7 @@ Log di avvio contiene conferma di connessione al database "Catering".<br>
 Task 7A-> Login e registrazione A.<br>
 Aggiornamento Utente, SQL con email invece di nome_utente, creazione metodi nel Repository.<br>
 Task 7B-> Login e registrazione B.<br>
-Autenticazione con Spring Security, registrazione sicura e login. Endpoint pubblici /api/auth/**.
+Autenticazione con Spring Security, registrazione sicura e login. Endpoint pubblici /api/auth/**.<br>
 Tsk 7C-> Login e registrazione C.<br>
 ```
 Creare JwtService molto minimale:
