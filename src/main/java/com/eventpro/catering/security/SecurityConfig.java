@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * SECURITY CONFIG
@@ -19,10 +20,19 @@ import org.springframework.security.config.http.SessionCreationPolicy;
  * - Concede accesso pubblico agli endpoint di autenticazione (/api/auth/**)
  * - Richiede autenticazione per tutto il resto
  * - Disabilita CSRF (per semplicità) e configura SESSION_STATELESS (ideale per API REST)
+ * - Registra il filtro JWT per validare i token in ogni richiesta
  */
 @Configuration
 @EnableMethodSecurity // Utile per autorizzazioni future basate su @PreAuthorize
 public class SecurityConfig {
+
+    // Inietta il filtro JWT tramite dependency injection
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    // Costruttore per dependency injection del filtro JWT
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    }
 
     /**
      * CONFIGURA PasswordEncoder
@@ -77,7 +87,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll() // Accesso pubblico agli endpoint di autenticazione
                         .anyRequest().authenticated() // Protegge tutto il resto
-                );
+                )
+
+                // Registra il filtro JWT PRIMA del filtro di autenticazione standard
+                // Questo permette di intercettare ogni richiesta e validare il token JWT
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
