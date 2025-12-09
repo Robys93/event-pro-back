@@ -4,6 +4,7 @@ import com.eventpro.catering.dto.AuthResponse;
 import com.eventpro.catering.dto.LoginRequest;
 import com.eventpro.catering.model.Utente;
 import com.eventpro.catering.repository.UtenteRepository;
+import com.eventpro.catering.security.JwtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  *
  * Gestisce gli endpoint per:
  * - Registrazione nuovi utenti
- * - Login utenti esistenti
+ * - Login utenti esistenti (con generazione JWT)
  *
  * Tutti gli endpoint sono sotto il path /api/auth
  */
@@ -29,14 +30,17 @@ public class AuthController {
     private final UtenteRepository utenteRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;  // AGGIUNTO: Service per gestire JWT
 
     // Costruttore per dependency injection
     public AuthController(UtenteRepository utenteRepository,
                           PasswordEncoder passwordEncoder,
-                          AuthenticationManager authenticationManager) {
+                          AuthenticationManager authenticationManager,
+                          JwtService jwtService) {  // AGGIUNTO: Inietta JwtService
         this.utenteRepository = utenteRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
     }
 
     /**
@@ -84,13 +88,14 @@ public class AuthController {
     }
 
     /**
-     * ENDPOINT PER IL LOGIN
+     * ENDPOINT PER IL LOGIN CON JWT
      *
      * POST /api/auth/login
      *
+     * MODIFICATO: Ora genera e restituisce un token JWT invece di un semplice messaggio.
+     *
      * Riceve email e password, verifica le credenziali usando AuthenticationManager.
-     * Se le credenziali sono corrette, risponde con 200 OK.
-     * Se sono sbagliate, risponde con 401 Unauthorized.
+     * Se le credenziali sono corrette, genera un token JWT e lo restituisce.
      *
      * FLUSSO:
      * 1. Riceve LoginRequest con email e password
@@ -98,11 +103,12 @@ public class AuthController {
      * 3. AuthenticationManager verifica le credenziali:
      *    - Chiama CustomUserDetailsService per recuperare l'utente
      *    - Confronta la password inserita con quella criptata nel DB usando BCrypt
-     * 4. Se tutto ok, restituisce "Login effettuato con successo"
-     * 5. Se le credenziali sono sbagliate, lancia AuthenticationException
+     * 4. Se tutto ok, genera un token JWT usando JwtService
+     * 5. Restituisce il token nel campo "accessToken" dell'AuthResponse
+     * 6. Se le credenziali sono sbagliate, lancia AuthenticationException
      *
      * @param loginRequest DTO con email e password
-     * @return ResponseEntity con messaggio di successo o errore
+     * @return ResponseEntity con token JWT o messaggio di errore
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
@@ -118,8 +124,14 @@ public class AuthController {
             // Se le credenziali sono sbagliate, lancia un'eccezione
             Authentication authentication = authenticationManager.authenticate(authToken);
 
-            // Se arriviamo qui, le credenziali sono corrette
-            return ResponseEntity.ok(new AuthResponse("Login effettuato con successo"));
+            // MODIFICATO: Se arriviamo qui, le credenziali sono corrette
+            // Genera il token JWT usando l'email dell'utente
+            String jwtToken = jwtService.generateToken(loginRequest.getEmail());
+
+            // MODIFICATO: Restituisce il token JWT nell'AuthResponse
+            return ResponseEntity.ok(
+                    new AuthResponse("Login effettuato con successo", jwtToken)
+            );
 
         } catch (AuthenticationException e) {
             // Credenziali sbagliate
