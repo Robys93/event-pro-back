@@ -8,27 +8,8 @@ Aggiornamento Utente, SQL con email invece di nome_utente, creazione metodi nel 
 Task 7B-> Login e registrazione B.<br>
 Autenticazione con Spring Security, registrazione sicura e login. Endpoint pubblici /api/auth/**.<br>
 Tsk 7C-> Login e registrazione C.<br>
-```
-Creare JwtService molto minimale:
--generateToken(String username) → crea un token con una secret fissa e una scadenza.
--extractUsername(String token).
-Modificare login:
--se l’autenticazione va a buon fine, invece di “login ok” restituisce un JSON con dentro il token (es. AuthResponse { accessToken }).
-Creare JwtAuthenticationFilter che:
--legge l’header Authorization: Bearer <token>
--usa JwtService per estrarre lo username
--carica l’utente da CustomUserDetailsService
--se è tutto valido, setta l’utente nel SecurityContext.
-Aggiornare SecurityConfig:
--registrare il filtro: .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-Creare un endpoint di prova, es:
--GET /api/user/me
--restituisce l’email dell’utente loggato
--NON deve stare sotto /api/auth/** (quindi è protetto).
-Verifica finale:
--chiamata a /api/auth/login → ricevo token
--chiamata a /api/user/me con header Authorization: Bearer <token> → devo ricevere i dati dell’utente.
-```
+Implementazione JwtService per gestione token e autorizzazioni. Endpoint di login /api/auth/login, endpoint di user /api/user/me.
+
 Nella repository è presente il file di nome<br>
 ```schema_sql_test_login_local.sql```<br>
 Nel file è presente una struttura query pronta all'uso per creare e popolare lo schema richiesto. Apritelo nel workbench di MySQL e fate partire lo script.<br>
