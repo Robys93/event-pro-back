@@ -8,8 +8,17 @@ Aggiornamento Utente, SQL con email invece di nome_utente, creazione metodi nel 
 Task 7B-> Login e registrazione B.<br>
 Autenticazione con Spring Security, registrazione sicura e login. Endpoint pubblici /api/auth/**.<br>
 Tsk 7C-> Login e registrazione C.<br>
-Implementazione JwtService per gestione token e autorizzazioni. Endpoint di login /api/auth/login, endpoint di user /api/user/me.
+Implementazione JwtService per gestione token e autorizzazioni. Endpoint di login /api/auth/login, endpoint di user /api/user/me.<br>
+Task 5-> Creare i modelli Evento e TipologiaEvento.<br>
+```
+Crea due classi nel backend:
+-TipologiaEvento: id, nome, descrizione (facoltativa)
+-Evento: nome, data, oraInizio, oraFine, location, note (facoltativa), flag eventoGiornaliero, collegamento al Cliente (può essere vuoto) e alla TipologiaEvento
 
+Completato quando
+-Le tabelle Evento e TipologiaEvento sono presenti nel database
+-Puoi creare un Evento da codice e salvarlo nel DB
+```
 Nella repository è presente il file di nome<br>
 ```schema_sql_test_login_local.sql```<br>
 Nel file è presente una struttura query pronta all'uso per creare e popolare lo schema richiesto. Apritelo nel workbench di MySQL e fate partire lo script.<br>
