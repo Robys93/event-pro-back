@@ -10,6 +10,10 @@ import com.eventpro.catering.repository.TipologiaEventoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * SERVICE PER LA GESTIONE DEGLI EVENTI
  *
@@ -74,6 +78,65 @@ public class EventoService {
                 .orElseThrow(() -> new EventoNotFoundException(id));
 
         return convertToResponseDTO(evento);
+    }
+
+    /**
+     * RECUPERA TUTTI GLI EVENTI
+     *
+     * Questo metodo restituisce tutti gli eventi presenti nel database
+     * ordinati per data crescente.
+     *
+     * COME FUNZIONA:
+     * 1. Chiama il repository per recuperare tutti gli eventi ordinati
+     * 2. Usa stream() per convertire ogni Evento in EventoResponseDTO
+     * 3. Raccoglie i risultati in una lista
+     *
+     * ESEMPIO DI USO:
+     * List<EventoResponseDTO> eventi = eventoService.getAllEventi();
+     * // eventi contiene tutti gli eventi del database
+     *
+     * @return Lista di EventoResponseDTO ordinati per data
+     */
+    public List<EventoResponseDTO> getAllEventi() {
+        // STEP 1: Recupera tutti gli eventi dal repository ordinati per data
+        List<Evento> eventi = eventoRepository.findAllByOrderByDataAsc();
+
+        // STEP 2: Converte ogni Evento in EventoResponseDTO usando stream
+        // - stream(): crea uno stream dalla lista
+        // - map(this::convertToResponseDTO): applica la conversione a ogni elemento
+        // - collect(Collectors.toList()): raccoglie i risultati in una lista
+        return eventi.stream()
+                .map(this::convertToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * RECUPERA EVENTI PER DATA
+     *
+     * Questo metodo restituisce solo gli eventi che si svolgono
+     * in una specifica data.
+     *
+     * COME FUNZIONA:
+     * 1. Chiama il repository per recuperare eventi filtrati per data
+     * 2. Usa stream() per convertire ogni Evento in EventoResponseDTO
+     * 3. Raccoglie i risultati in una lista
+     *
+     * ESEMPIO DI USO:
+     * LocalDate data = LocalDate.of(2024, 6, 15);
+     * List<EventoResponseDTO> eventiDelGiorno = eventoService. getEventiByData(data);
+     * // eventiDelGiorno contiene solo eventi del 15 giugno 2024
+     *
+     * @param data La data da filtrare (es: 2024-06-15)
+     * @return Lista di EventoResponseDTO per quella data
+     */
+    public List<EventoResponseDTO> getEventiByData(LocalDate data) {
+        // STEP 1: Recupera eventi filtrati per data dal repository
+        List<Evento> eventi = eventoRepository.findByData(data);
+
+        // STEP 2: Converte ogni Evento in EventoResponseDTO usando stream
+        return eventi.stream()
+                .map(this::convertToResponseDTO)
+                .collect(Collectors. toList());
     }
 
     /**
