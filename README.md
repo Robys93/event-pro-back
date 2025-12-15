@@ -10,8 +10,16 @@ Autenticazione con Spring Security, registrazione sicura e login. Endpoint pubbl
 Tsk 7C-> Login e registrazione C.<br>
 Implementazione JwtService per gestione token e autorizzazioni. Endpoint di login /api/auth/login, endpoint di user /api/user/me.<br>
 Task 5-> Creare i modelli Evento e TipologiaEvento.<br>
-Creazione Model Evento e gestione dei vari eventi nel DB.
-
+Creazione Model Evento e gestione dei vari eventi nel DB.<br>
+```
+Aggiungi nel backend gli endpoint base:
+-POST /eventi → crea un nuovo evento (con data, orari, cliente collegato, tipologia)
+-GET /eventi → restituisce tutti gli eventi oppure solo quelli di un certo giorno (se riceve una data come parametro)
+-GET /eventi/{id} → dettaglio di un singolo evento
+Completato quando
+-Puoi creare un evento tramite chiamata HTTP
+-Puoi leggere la lista di eventi e il dettaglio di uno specifico
+```
 Nella repository è presente il file di nome<br>
 ```schema_sql_test_login_local.sql```<br>
 Nel file è presente una struttura query pronta all'uso per creare e popolare lo schema richiesto. Apritelo nel workbench di MySQL e fate partire lo script.<br>
