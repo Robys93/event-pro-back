@@ -14,12 +14,6 @@ Creazione Model Evento e gestione dei vari eventi nel DB.<br>
 Task 6-> Creare le API per aggiungere e leggere gli Eventi.<br>
 Aggiunta diversi endpoint di chiamata per eventi.
 
-Nella repository è presente il file di nome<br>
-```schema_sql_test_login_local.sql```<br>
-Nel file è presente una struttura query pronta all'uso per creare e popolare lo schema richiesto. Apritelo nel workbench di MySQL e fate partire lo script.<br>
-Se il vostro server di MySQL risulta "Stopped" nel server status del workbench, ricordarsi di controllare nei servizi di windows se il servizio di MySQL è stato arrestato.<br>
-In quel caso, avviatelo e dovrebbe essere pronto all'uso nel workbench.
-
 Per la connessione al localhost di MySQL ricordarsi che l'utenza e password base erano root entrambe, se avete cambiato una o entrambe dovete aggiornare i nomi nel file:<br>
 ```application-dev.properties```<br>
 Specificatamente in riga 41 e 45<br>
@@ -28,12 +22,3 @@ spring.datasource.username
 spring.datasource.password
 ```
 Con i vostri username e password del localhost di MySQL.
-
-Se ci sono ancora problemi con MySQL e volete testare in locale utilizzando H2, basta andare in<br>
-```application.properties```<br>
-In riga 27 cambiare il comando da "dev" a "H2"<br>
-```
-spring.profiles.active
-```
-<br>
-Questo vi permetterà di utilizzare lo schema creato in RAM da SpringBoot.
